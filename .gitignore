@@ -1,0 +1,3 @@
+# Project exclude paths
+/mall-common/target/
+/renren-generator/target/
