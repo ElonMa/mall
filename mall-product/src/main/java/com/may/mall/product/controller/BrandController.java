@@ -3,6 +3,7 @@ package com.may.mall.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+//import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ import com.may.common.utils.R;
  *
  * @author may
  * @email may@gmail.com
- * @date 2020-07-23 23:58:51
+ * @date 2020-08-22 15:04:20
  */
 @RestController
 @RequestMapping("product/brand")

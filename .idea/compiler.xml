@@ -7,13 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mall-coupon" />
+        <module name="mall-ware" />
+        <module name="mall-search" />
         <module name="renren-generator" />
         <module name="mall-common" />
-        <module name="renren-fast" />
+        <module name="mall-coupon" />
         <module name="mall-product" />
         <module name="mall-member" />
-        <module name="mall-ware" />
+        <module name="renren-fast" />
         <module name="mall-order" />
         <module name="mall-gateway" />
       </profile>
@@ -26,6 +27,7 @@
       <module name="mall-member" options="-parameters" />
       <module name="mall-order" options="-parameters" />
       <module name="mall-product" options="-parameters" />
+      <module name="mall-search" options="-parameters" />
       <module name="mall-ware" options="-parameters" />
       <module name="renren-fast" options="-parameters" />
       <module name="renren-generator" options="-parameters" />
