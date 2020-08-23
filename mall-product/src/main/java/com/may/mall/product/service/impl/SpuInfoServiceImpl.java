@@ -1,7 +1,12 @@
 package com.may.mall.product.service.impl;
 
+import com.may.common.constant.ProductConstant;
 import com.may.common.to.es.SkuEsModle;
+import com.may.common.utils.R;
+import com.may.common.vo.SkuHasStockVo;
 import com.may.mall.product.entity.*;
+import com.may.mall.product.feign.SearchFeignService;
+import com.may.mall.product.feign.WareFeignService;
 import com.may.mall.product.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +42,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Autowired
     ProductAttrValueService productAttrValueService;
 
+    @Autowired
+    WareFeignService wareFeignService;
+
+    @Autowired
+    SearchFeignService searchFeignService;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<SpuInfoEntity> page = this.page(
@@ -51,6 +62,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     public void up(Long spuId) {
         //查询当前spuid对应的 所有sku信息，品牌的名字；
         List<SkuInfoEntity> skus =   skuInfoService.getSkusBySpuiId(spuId);
+        List<Long> skuIdList = skus.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
 
         // TODO 查询当前sku的所有可以被检索的规格属性；
 
@@ -71,19 +83,34 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             return attr;
         }).collect(Collectors.toList());
 
-        List<SkuEsModle> uoProducts = new ArrayList<>();
+
+        //TODO 查询是否有库存
+        Map<Long, Boolean> stockMap = null;
+        try{
+            R<List<SkuHasStockVo>> skuHasstock = wareFeignService.getSkuHasstock(skuIdList);
+            stockMap = skuHasstock.getData().stream().collect(Collectors.toMap(SkuHasStockVo::getSkuId, item -> item.getHasStock()));
+
+        }catch (Exception e){
+            log.error("库存服务查询异常 ：原因{}",e);
+        }
 
 
-
-
-
-         //封装信息
-        skus.stream().map(sku ->{
+        //封装信息
+        Map<Long, Boolean> finalStockMap = stockMap;
+        List<SkuEsModle> upProducts = skus.stream().map(sku -> {
             SkuEsModle esModle = new SkuEsModle();
-            BeanUtils.copyProperties(sku,esModle);
+            BeanUtils.copyProperties(sku, esModle);
             esModle.setSkuPrice(sku.getPrice());
             esModle.setSkuImg(sku.getSkuDefaultImg());
-            //TODO 查询是否有库存
+
+
+            if (finalStockMap == null) {
+                esModle.setHasStock(true);
+            } else {
+                esModle.setHasStock(finalStockMap.get(sku.getSkuId()));
+            }
+
+
             //TODO 热度评分
             esModle.setHotScore(0L);
 
@@ -97,11 +124,20 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             esModle.setAttrs(attrsList);
 
 
+            return esModle;
+        }).collect(Collectors.toList());
 
-            return  esModle;
-        } ).collect(Collectors.toList());
 
         //TODO 发送 给es
+        R r = searchFeignService.productStatusUp(upProducts);
+        if(r.getCode()==0){
+            //修改 spu 状态
+            baseMapper.updateSpuStatus(spuId, ProductConstant.StatusEnum.SPU_UP.getCode());
+        }else{
+            //远程调用失败
+            //TODO 重复调用，接口密等性 重试机制
+
+        }
 
 
     }
