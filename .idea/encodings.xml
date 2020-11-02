@@ -6,7 +6,10 @@
     <file url="file://$PROJECT_DIR$/mall-member/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mall-order/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mall-product/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-product/src/main/java/com/may/mall/product/service/impl/AttrServiceImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-product/src/main/java/com/may/mall/product/service/impl/CategoryBrandRelationServiceImpl.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mall-search/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-third-party/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mall-ware/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/renren-fast/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/renren-fast/src/main/resources" charset="UTF-8" />
