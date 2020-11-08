@@ -8,8 +8,8 @@ spring:
     nacos:
       discovery:
         server-addr: mayongfeng.cc:8848
-  application:
-    name: mall-order
+#  application:
+#    name: mall-order
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml

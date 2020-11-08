@@ -2,9 +2,6 @@ spring:
   cloud:
     gateway:
       routes:
-#
-
-
         - id: product_route
           uri: lb://mall-product
           predicates:
@@ -46,6 +43,3 @@ spring:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
-
-
-

@@ -8,8 +8,8 @@ spring:
     nacos:
       discovery:
         server-addr: mayongfeng.cc:8848
-  application:
-    name: mall-member
+#  application:
+#    name: mall-member
 
 
 mybatis-plus:
