@@ -91,7 +91,15 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 
     @Override
     public List<SkuHasStockVo> getSkusHasStock(List<Long> skuIds) {
-        return null;
+
+        List<SkuHasStockVo> collect = skuIds.stream().map(skuid ->{
+            SkuHasStockVo vo =new SkuHasStockVo();
+            long count = baseMapper.getSkuStock(skuid);
+            vo.setSkuId(skuid);
+            vo.setHasStock(count>0);
+            return vo;
+        }).collect(Collectors.toList());
+         return collect;
     }
 
 }
