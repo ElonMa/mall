@@ -22,7 +22,7 @@ public class MallElasticSearchConfig {
     public RestHighLevelClient  esRestClient(){
         RestHighLevelClient client = new RestHighLevelClient(
                 RestClient.builder(
-                        new HttpHost("192.168.56.10",9200,"http") ));
+                        new HttpHost("mayongfeng.cc",9200,"http") ));
         return client;
 
     }
