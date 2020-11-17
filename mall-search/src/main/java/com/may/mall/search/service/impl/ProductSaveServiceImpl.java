@@ -47,7 +47,7 @@ public class ProductSaveServiceImpl implements ProductSaveService {
 
         }).collect(Collectors.toList());
 
-        log.error("商品上架错误：{}",collect);
+        log.error("商品上架成功：{}",collect);
         return b;
     }
 }

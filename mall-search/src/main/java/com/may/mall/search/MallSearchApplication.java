@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 1/导入配置
@@ -11,6 +12,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * 3、参照api文档
  */
 @EnableDiscoveryClient
+@ComponentScan(basePackages = {"com.may.mall.search.*"})
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class MallSearchApplication {
 
